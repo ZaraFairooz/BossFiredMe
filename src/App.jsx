@@ -8,9 +8,9 @@ export function Header() {
       <div className="container header-inner">
         <Link to="/" className="brand">Boss Fired Me</Link>
         <nav className="nav">
-          <a href="#services">Services</a>
-          <a href="#how-it-works">How it works</a>
-          <a href="#faq">FAQ</a>
+          <Link to="/#services">Services</Link>
+          <Link to="/#how-it-works">How it works</Link>
+          <Link to="/#faq">FAQ</Link>
           <Link to="/contact">Contact</Link>
           <a className="btn btn-primary" href="#get-started">Get Started</a>
         </nav>
