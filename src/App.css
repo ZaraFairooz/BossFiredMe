@@ -151,6 +151,12 @@
 /* Contact page send button hover pop */
 .contact-form .btn { transition: transform 150ms ease, box-shadow 150ms ease; }
 .contact-form .btn:hover { transform: translateY(-1px) scale(1.06); box-shadow: 0 6px 18px rgba(2,6,23,0.15); }
+
+/* Services section theming */
+.services { background: var(--accent); color: #ffffff; }
+.services h2 { color: #ffffff; }
+.services .card.service { background: #ffffff; color: #0f172a; border-color: rgba(2,6,23,0.08); }
+.services .card.service h3 { color: #0f172a; }
 @media (max-width: 900px) {
   .form-row { grid-template-columns: 1fr; }
 }
