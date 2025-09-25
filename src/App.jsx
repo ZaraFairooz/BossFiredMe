@@ -1,18 +1,52 @@
 import './App.css'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 export function Header() {
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <header className="site-header">
       <div className="container header-inner">
         <Link to="/" className="brand">Boss Fired Me</Link>
-        <nav className="nav">
+        
+        {/* Desktop Navigation */}
+        <nav className="nav desktop-nav">
           <Link to="/#services">Services</Link>
           <Link to="/#how-it-works">How it works</Link>
           <Link to="/#faq">FAQ</Link>
           <Link to="/contact">Contact</Link>
           <a className="btn btn-primary" href="#get-started">Get Started</a>
+        </nav>
+
+        {/* Mobile Menu Button */}
+        <button 
+          className="mobile-menu-btn"
+          onClick={toggleMobileMenu}
+          aria-label="Toggle mobile menu"
+        >
+          <span className={`hamburger ${isMobileMenuOpen ? 'open' : ''}`}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+
+        {/* Mobile Navigation */}
+        <nav className={`nav mobile-nav ${isMobileMenuOpen ? 'open' : ''}`}>
+          <Link to="/#services" onClick={closeMobileMenu}>Services</Link>
+          <Link to="/#how-it-works" onClick={closeMobileMenu}>How it works</Link>
+          <Link to="/#faq" onClick={closeMobileMenu}>FAQ</Link>
+          <Link to="/contact" onClick={closeMobileMenu}>Contact</Link>
+          <a className="btn btn-primary" href="#get-started" onClick={closeMobileMenu}>Get Started</a>
         </nav>
       </div>
     </header>
@@ -309,7 +343,7 @@ function FundingCTA() {
     <section id="get-started" className="section cta">
       <div className="container cta-inner">
         <div>
-          <h2>Start now! Talk to one our lawyers. </h2>
+          <h2>Start now! Talk to one of our lawyers. </h2>
           <p>Get a response in as fast as an hour.</p>
         </div>
         <a className="btn btn-primary btn-lg" href="contact">See if you qualify</a>
@@ -343,9 +377,58 @@ function FAQ() {
 export function Footer() {
   return (
     <footer className="site-footer">
-      <div className="container footer-inner">
-        <div className="brand">Boss Fired Me</div>
-        <div className="muted">© {new Date().getFullYear()} Boss Fired Me. All rights reserved.</div>
+      <div className="container">
+        <div className="footer-content">
+          <div className="footer-section">
+            <div className="brand">Boss Fired Me</div>
+            <div className="muted">© {new Date().getFullYear()} Boss Fired Me. All rights reserved.</div>
+          </div>
+          
+          <div className="footer-section">
+            <h3>Contact</h3>
+            <div className="contact-buttons">
+              <a href="mailto:example@bossfiredme.com" className="contact-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                  <polyline points="22,6 12,13 2,6"/>
+                </svg>
+                example@bossfiredme.com
+              </a>
+              <a href="tel:+1234567890" className="contact-btn">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                </svg>
+                (123) 456-7890
+              </a>
+            </div>
+          </div>
+          
+          <div className="footer-section">
+            <h3>Follow Us</h3>
+            <div className="social-buttons">
+              <a href="https://linkedin.com/company/bossfiredme" className="social-btn" target="_blank" rel="noopener noreferrer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                </svg>
+                LinkedIn
+              </a>
+              <a href="https://instagram.com/bossfiredme" className="social-btn" target="_blank" rel="noopener noreferrer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
+                Instagram
+              </a>
+              <a href="https://facebook.com/bossfiredme" className="social-btn" target="_blank" rel="noopener noreferrer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+                Facebook
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   )

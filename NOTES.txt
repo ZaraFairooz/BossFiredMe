@@ -1,8 +1,11 @@
 TO DO
 -  change text font
-- fix mobile view of header
-- fix mobile view of length spacing on titles on each section
 
 idea
 - make header to nav bar and nav bar will take up 
 entire page from bottom up like kirkland and ellis
+
+do before first draft
+- make arrow downwards even better
+- change background of last three sections
+- go over matt's contract's to do's
