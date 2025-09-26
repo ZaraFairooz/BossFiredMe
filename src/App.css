@@ -17,10 +17,10 @@
 
 /* Steps layout: center content */
 .steps h2 { text-align: center; }
-.steps h2 { font-size: 50px; line-height: 1.15; font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif; }
+.steps h2 { font-size: 65px; line-height: 1.15; font-family: "Arial", "Courier New", monospace; }
 .steps .layout { display: flex; flex-direction: column; align-items: center; }
-.steps .left { display: flex; flex-direction: column; gap: 40px; width: 100%; max-width: 1000px; }
-.steps .grid.three { display: flex; flex-direction: column; gap: 40px; }
+.steps .left { display: flex; flex-direction: column; gap: 90px; width: 100%; max-width: 1000px; }
+.steps .grid.three { display: flex; flex-direction: column; gap: 60px; }
 .steps .step { width: 100%; text-align: left; max-width: 450px; }
 .steps .step h3 { font-size: 20px; line-height: 1.2; font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif; }
 
@@ -206,9 +206,9 @@
 .hero h1 {
   font-size: 70px;
   line-height: 1.1;
-  margin: 0 0 25px;
+  margin: 0 0 60px;
 }
-.subtitle { color: var(--muted); margin-bottom: 50px; }
+.subtitle { color: var(--muted); margin-bottom: 90px; }
 
 /* Steps */
 .steps { background-color: rgb(43, 43, 43); color: #e4e2e2; padding: 150px 0;}
@@ -448,7 +448,7 @@
   color: #ffffff; 
   padding: 150px 0;
 }
-.services h2 { color: #ffffff; }
+.services h2 { color: #ffffff; text-align: center; }
 .services .card.service { background: #ffffff; color: #0f172a; border-color: rgba(2,6,23,0.08); }
 .services .card.service h3 { color: var(--primary); }
 .services h2 { font-size: 50px; line-height: 2; font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif; }
