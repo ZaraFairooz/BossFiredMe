@@ -15,15 +15,25 @@
   gap: 24px;
 }
 
-/* Steps layout: stack items vertically and align left */
-.steps h2 { text-align: left; }
+/* Steps layout: center content */
+.steps h2 { text-align: center; }
 .steps h2 { font-size: 50px; line-height: 1.15; font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif; }
-.steps .layout { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 24px; }
-.steps .left { display: grid; gap: 30px; }
-.steps .grid.three { grid-template-columns: 1fr; justify-items: start; }
-.steps .right { min-height: 100%; }
-.steps .step { width: 100%; text-align: left; }
+.steps .layout { display: flex; flex-direction: column; align-items: center; }
+.steps .left { display: flex; flex-direction: column; gap: 40px; width: 100%; max-width: 1000px; }
+.steps .grid.three { display: flex; flex-direction: column; gap: 40px; }
+.steps .step { width: 100%; text-align: left; max-width: 450px; }
 .steps .step h3 { font-size: 20px; line-height: 1.2; font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif; }
+
+/* Alternate card positions */
+.steps .step:nth-child(1) { 
+  align-self: flex-start; 
+}
+.steps .step:nth-child(2) { 
+  align-self: flex-end; 
+}
+.steps .step:nth-child(3) { 
+  align-self: flex-start; 
+}
 
 .card {
   background: var(--surface);
@@ -223,124 +233,6 @@
 .animate-card:nth-child(2) { transition-delay: 100ms; }
 .animate-card:nth-child(3) { transition-delay: 200ms; }
 
-/* Steps Animation */
-.steps-animation {
-  position: relative;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 1;
-  padding-top: 40px;
-}
-
-.animation-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  will-change: transform;
-  transform: translateY(calc(var(--scroll-progress, 0) * 200px));
-}
-
-.progress-ring {
-  position: relative;
-  width: 120px;
-  height: 120px;
-}
-
-.progress-svg {
-  width: 100%;
-  height: 100%;
-  transform: rotate(-90deg);
-}
-
-.progress-circle {
-  transition: stroke-dashoffset 0.3s ease-out;
-  filter: drop-shadow(0 0 8px rgba(20, 184, 166, 0.4));
-}
-
-.progress-content {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  gap: 8px;
-}
-
-.step-indicator {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.2);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  font-weight: 600;
-  color: #ffffff;
-  transition: all 0.3s ease;
-}
-
-.step-indicator:nth-child(1) {
-  background: var(--accent);
-  box-shadow: 0 0 12px rgba(20, 184, 166, 0.6);
-}
-
-.floating-elements {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
-}
-
-.floating-dot {
-  position: absolute;
-  width: 6px;
-  height: 6px;
-  background: var(--accent);
-  border-radius: 50%;
-  animation: float 3s ease-in-out infinite;
-}
-
-.floating-dot:nth-child(1) {
-  top: 20%;
-  left: 30%;
-}
-
-.floating-dot:nth-child(2) {
-  top: 60%;
-  right: 25%;
-}
-
-.floating-dot:nth-child(3) {
-  bottom: 30%;
-  left: 40%;
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0px) scale(1);
-    opacity: 0.7;
-  }
-  50% {
-    transform: translateY(-20px) scale(1.2);
-    opacity: 1;
-  }
-}
-
-/* Animation hover effect */
-.steps-animation:hover .progress-circle {
-  filter: drop-shadow(0 0 16px rgba(20, 184, 166, 0.8));
-}
-
-.steps-animation:hover .step-indicator {
-  transform: scale(1.1);
-}
 
 /* CTA */
 .cta { 
@@ -558,7 +450,7 @@
 }
 .services h2 { color: #ffffff; }
 .services .card.service { background: #ffffff; color: #0f172a; border-color: rgba(2,6,23,0.08); }
-.services .card.service h3 { color: var(--accent); }
+.services .card.service h3 { color: var(--primary); }
 .services h2 { font-size: 50px; line-height: 2; font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif; }
 
 /* Service card animations */
@@ -615,11 +507,6 @@
   }
   
   .steps .layout { grid-template-columns: 1fr; }
-  
-  /* Hide steps animation on mobile */
-  .steps-animation {
-    display: none;
-  }
 }
 
 @media (max-width: 640px) {

@@ -67,8 +67,6 @@ function Hero() {
 
 function Steps() {
   const stepRefs = useRef([]);
-  const lastScrollY = useRef(0);
-  const arrowRef = useRef(null);
 
   useEffect(() => {
     const observerOptions = {
@@ -117,68 +115,6 @@ function Steps() {
     };
   }, []);
 
-  useEffect(() => {
-    let stepsSection = null;
-    let sectionTop = 0;
-    let sectionHeight = 0;
-    let viewportHeight = window.innerHeight;
-
-    // Cache section data for better performance
-    const updateSectionData = () => {
-      stepsSection = document.getElementById('how-it-works');
-      if (stepsSection) {
-        sectionTop = stepsSection.offsetTop;
-        sectionHeight = stepsSection.offsetHeight;
-        viewportHeight = window.innerHeight;
-      }
-    };
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const scrollDirection = currentScrollY > lastScrollY.current ? 'down' : 'up';
-      
-          if (arrowRef.current) {
-            arrowRef.current.setAttribute('data-direction', scrollDirection);
-            
-            // Use cached section data for better performance
-            if (stepsSection) {
-              // Calculate when section starts being visible
-              const sectionStart = sectionTop - viewportHeight;
-              // Calculate when section ends being visible
-              const sectionEnd = sectionTop + sectionHeight;
-              
-              // Calculate progress from section start to end
-              let scrollProgress = 0;
-              if (currentScrollY >= sectionStart && currentScrollY <= sectionEnd) {
-                scrollProgress = (currentScrollY - sectionStart) / (sectionEnd - sectionStart);
-              } else if (currentScrollY > sectionEnd) {
-                scrollProgress = 1;
-              }
-              
-              arrowRef.current.style.setProperty('--scroll-progress', Math.max(0, Math.min(1, scrollProgress)));
-            } else {
-              // Fallback to general scroll progress
-              arrowRef.current.style.setProperty('--scroll-progress', Math.min(currentScrollY / 1000, 1));
-            }
-          }
-      
-      lastScrollY.current = currentScrollY;
-    };
-
-    // Initial setup
-    updateSectionData();
-    handleScroll();
-
-    // Listeners
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', updateSectionData, { passive: true });
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', updateSectionData);
-    };
-  }, []);
-
   return (
     <section id="how-it-works" className="section steps">
       <div className="container">
@@ -209,47 +145,6 @@ function Steps() {
                 <div className="step-num">3</div>
                 <h3>Move forward with confidence</h3>
                 <p>You relax and we handle the rest.</p>
-              </div>
-            </div>
-          </div>
-          <div className="right">
-            <div ref={arrowRef} className="steps-animation" data-direction="down">
-              <div className="animation-container">
-                <div className="progress-ring">
-                  <svg className="progress-svg" viewBox="0 0 100 100">
-                    <circle
-                      className="progress-circle-bg"
-                      cx="50"
-                      cy="50"
-                      r="45"
-                      fill="none"
-                      stroke="rgba(255, 255, 255, 0.1)"
-                      strokeWidth="8"
-                    />
-                    <circle
-                      className="progress-circle"
-                      cx="50"
-                      cy="50"
-                      r="45"
-                      fill="none"
-                      stroke="var(--accent)"
-                      strokeWidth="8"
-                      strokeLinecap="round"
-                      strokeDasharray="283"
-                      strokeDashoffset="calc(283 - (283 * var(--scroll-progress, 0)))"
-                    />
-                  </svg>
-                  <div className="progress-content">
-                    <div className="step-indicator">1</div>
-                    <div className="step-indicator">2</div>
-                    <div className="step-indicator">3</div>
-                  </div>
-                </div>
-                <div className="floating-elements">
-                  <div className="floating-dot" style={{animationDelay: '0s'}}></div>
-                  <div className="floating-dot" style={{animationDelay: '0.5s'}}></div>
-                  <div className="floating-dot" style={{animationDelay: '1s'}}></div>
-                </div>
               </div>
             </div>
           </div>
