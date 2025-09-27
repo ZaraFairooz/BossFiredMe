@@ -16,7 +16,10 @@ export function Header() {
   return (
     <header className="site-header">
       <div className="container header-inner">
-        <Link to="/" className="brand">Boss Fired Me</Link>
+        <Link to="/" className="brand">
+          <span className="brand-icon">⚖️</span>
+          Boss Fired Me
+        </Link>
         
         {/* Desktop Navigation */}
         <nav className="nav desktop-nav">
@@ -56,8 +59,12 @@ export function Header() {
 function Hero() {
   return (
     <section className="hero">
+      <video className="hero-video" autoPlay muted loop playsInline>
+        <source src="/Pics/vid2.mp4" type="video/mp4" />
+      </video>
+      <div className="hero-overlay"></div>
       <div className="container hero-inner">
-        <h1 className="hero-title">No fees, unless you win</h1>
+        <h1 className="hero-title">No Fees, Unless You Win</h1>
         <p className="subtitle">Wrongfully terminated or mistreated at work? We connect you with employment attorneys who can help.</p>
         <a className="btn btn-accent" href="#get-started">Start your case</a>
       </div>
@@ -67,6 +74,7 @@ function Hero() {
 
 function Steps() {
   const stepRefs = useRef([]);
+  const titleRef = useRef(null);
 
   useEffect(() => {
     const observerOptions = {
@@ -115,36 +123,97 @@ function Steps() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (titleRef.current) {
+        const rect = titleRef.current.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        // Calculate visibility based on scroll position
+        const elementTop = rect.top;
+        const elementBottom = rect.bottom;
+        const elementHeight = rect.height;
+        
+        // Calculate how much of the element is visible
+        let visibilityRatio = 0;
+        if (elementTop < viewportHeight && elementBottom > 0) {
+          const visibleTop = Math.max(0, elementTop);
+          const visibleBottom = Math.min(viewportHeight, elementBottom);
+          const visibleHeight = visibleBottom - visibleTop;
+          visibilityRatio = Math.max(0, Math.min(1, visibleHeight / elementHeight));
+        }
+        
+        // Apply opacity and scale based on visibility
+        const opacity = visibilityRatio > 0.1 ? visibilityRatio : 0;
+        const scale = 0.8 + (visibilityRatio * 0.2); // Scale from 0.8 to 1.0
+        
+        titleRef.current.style.opacity = opacity;
+        titleRef.current.style.transform = `scale(${scale})`;
+      }
+    };
+
+    // Initial check
+    handleScroll();
+    
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <section id="how-it-works" className="section steps">
       <div className="container">
         <div className="layout">
           <div className="left">
-            <h2>Three Easy Steps</h2>
+            <h2 ref={titleRef}>Three Easy Steps</h2>
             <div className="grid three">
               <div 
                 ref={(el) => stepRefs.current[0] = el}
                 className="card step animate-card"
               >
                 <div className="step-num">1</div>
-                <h3>Tell us what happened</h3>
-                <p>Share the basics about your job, what happened, and when. We are here to hear you and help you.</p>
+                <div className="step-content">
+                  <div className="step-text">
+                    <h3>Tell us what happened</h3>
+                    <p>Share the basics about your job, what happened, and when. We are here to hear you and help you.</p>
+                  </div>
+                  <div className="step-image">
+                    <img src="/Pics/complaint.gif" alt="Complaint illustration" />
+                  </div>
+                </div>
               </div>
               <div 
                 ref={(el) => stepRefs.current[1] = el}
                 className="card step animate-card"
               >
                 <div className="step-num">2</div>
-                <h3>Get matched with a lawyer</h3>
-                <p>We find you the best employment attorney that matches exactly what you need.</p>
+                <div className="step-content">
+                  <div className="step-image">
+                    <img src="/Pics/lawyerMatch.gif" alt="Lawyer match illustration" />
+                  </div>
+                  <div className="step-text">
+                    <h3>Get matched with a lawyer</h3>
+                    <p>We find you the best employment attorney that matches exactly what you need.</p>
+                  </div>
+                </div>
               </div>
               <div 
                 ref={(el) => stepRefs.current[2] = el}
                 className="card step animate-card"
               >
                 <div className="step-num">3</div>
-                <h3>Move forward with confidence</h3>
-                <p>You relax and we handle the rest.</p>
+                <div className="step-content">
+                  <div className="step-text">
+                    <h3>Move forward with confidence</h3>
+                    <p>You relax and we handle the rest.</p>
+                  </div>
+                  <div className="step-image">
+                    <img src="/Pics/like.gif" alt="Like illustration" />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -156,6 +225,7 @@ function Steps() {
 
 function Services() {
   const serviceRefs = useRef([]);
+  const titleRef = useRef(null);
 
   useEffect(() => {
     const observerOptions = {
@@ -204,10 +274,50 @@ function Services() {
     };
   }, []);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (titleRef.current) {
+        const rect = titleRef.current.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        // Calculate visibility based on scroll position
+        const elementTop = rect.top;
+        const elementBottom = rect.bottom;
+        const elementHeight = rect.height;
+        
+        // Calculate how much of the element is visible
+        let visibilityRatio = 0;
+        if (elementTop < viewportHeight && elementBottom > 0) {
+          const visibleTop = Math.max(0, elementTop);
+          const visibleBottom = Math.min(viewportHeight, elementBottom);
+          const visibleHeight = visibleBottom - visibleTop;
+          visibilityRatio = Math.max(0, Math.min(1, visibleHeight / elementHeight));
+        }
+        
+        // Apply opacity and scale based on visibility
+        const opacity = visibilityRatio > 0.1 ? visibilityRatio : 0;
+        const scale = 0.8 + (visibilityRatio * 0.2); // Scale from 0.8 to 1.0
+        
+        titleRef.current.style.opacity = opacity;
+        titleRef.current.style.transform = `scale(${scale})`;
+      }
+    };
+
+    // Initial check
+    handleScroll();
+    
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <section id="services" className="section services">
       <div className="container">
-        <h2>We Help With Tough Work Situations</h2>
+        <h2 ref={titleRef}>We Help With Tough Work Situations</h2>
         <div className="grid three">
           <div 
             ref={(el) => serviceRefs.current[0] = el}
@@ -258,11 +368,53 @@ function Services() {
 }
 
 function FundingCTA() {
+  const titleRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (titleRef.current) {
+        const rect = titleRef.current.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        // Calculate visibility based on scroll position
+        const elementTop = rect.top;
+        const elementBottom = rect.bottom;
+        const elementHeight = rect.height;
+        
+        // Calculate how much of the element is visible
+        let visibilityRatio = 0;
+        if (elementTop < viewportHeight && elementBottom > 0) {
+          const visibleTop = Math.max(0, elementTop);
+          const visibleBottom = Math.min(viewportHeight, elementBottom);
+          const visibleHeight = visibleBottom - visibleTop;
+          visibilityRatio = Math.max(0, Math.min(1, visibleHeight / elementHeight));
+        }
+        
+        // Apply opacity and scale based on visibility
+        const opacity = visibilityRatio > 0.1 ? visibilityRatio : 0;
+        const scale = 0.8 + (visibilityRatio * 0.2); // Scale from 0.8 to 1.0
+        
+        titleRef.current.style.opacity = opacity;
+        titleRef.current.style.transform = `scale(${scale})`;
+      }
+    };
+
+    // Initial check
+    handleScroll();
+    
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <section id="get-started" className="section cta">
       <div className="container cta-inner">
         <div>
-          <h2>Start now! Talk to one of our lawyers. </h2>
+          <h2 ref={titleRef}>Start now! Talk to one of our lawyers. </h2>
           <p>Get a response in as fast as an hour.</p>
         </div>
         <a className="btn btn-primary btn-lg" href="contact">See if you qualify</a>
@@ -272,10 +424,52 @@ function FundingCTA() {
 }
 
 function FAQ() {
+  const titleRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (titleRef.current) {
+        const rect = titleRef.current.getBoundingClientRect();
+        const viewportHeight = window.innerHeight;
+        
+        // Calculate visibility based on scroll position
+        const elementTop = rect.top;
+        const elementBottom = rect.bottom;
+        const elementHeight = rect.height;
+        
+        // Calculate how much of the element is visible
+        let visibilityRatio = 0;
+        if (elementTop < viewportHeight && elementBottom > 0) {
+          const visibleTop = Math.max(0, elementTop);
+          const visibleBottom = Math.min(viewportHeight, elementBottom);
+          const visibleHeight = visibleBottom - visibleTop;
+          visibilityRatio = Math.max(0, Math.min(1, visibleHeight / elementHeight));
+        }
+        
+        // Apply opacity and scale based on visibility
+        const opacity = visibilityRatio > 0.1 ? visibilityRatio : 0;
+        const scale = 0.8 + (visibilityRatio * 0.2); // Scale from 0.8 to 1.0
+        
+        titleRef.current.style.opacity = opacity;
+        titleRef.current.style.transform = `scale(${scale})`;
+      }
+    };
+
+    // Initial check
+    handleScroll();
+    
+    // Add scroll listener
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <section id="faq" className="section faq">
       <div className="container">
-        <h2>Frequently Asked <span className="gradient-text">Questions</span></h2>
+        <h2 ref={titleRef}>Frequently Asked <span className="gradient-text">Questions</span></h2>
         <div className="faq-content">
           <details>
             <summary>Do I have to pay anything upfront?</summary>
@@ -298,6 +492,10 @@ function FAQ() {
 export function Footer() {
   return (
     <footer className="site-footer">
+      <video className="footer-video" autoPlay muted loop playsInline>
+        <source src="/Pics/vid2.mp4" type="video/mp4" />
+      </video>
+      <div className="footer-overlay"></div>
       <div className="container">
         <div className="footer-content">
           <div className="footer-section">

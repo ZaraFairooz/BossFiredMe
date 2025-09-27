@@ -2,20 +2,19 @@ TO DO
 -  change text font
 - make hero's sub text grey
 - add more animations
-- add more length and width on services between 
-cards and more length between card and title
 -make cta's sub title grey 
-- make common question's tabs bigger and more length
-between each questions 
+
 
 idea
 - make header to nav bar and nav bar will take up 
 entire page from bottom up like kirkland and ellis
 
 do before first draft
-- make arrow downwards even better
-- change background of services and questions
+- change background of services
 - go over matt's contract's to do's
 
 
 - put a border around the cta section with shadow in the back
+
+- make a google doc of sitemap and robots.txt 
+- add seo 
