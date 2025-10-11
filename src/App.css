@@ -28,8 +28,8 @@
 .steps .layout { display: flex; flex-direction: column; align-items: center; position: relative; z-index: 1; }
 .steps .left { display: flex; flex-direction: column; gap: 90px; width: 100%; max-width: 1000px; }
 .steps .grid.three { display: flex; flex-direction: column; gap: 60px; }
-.steps .step { width: 100%; text-align: left; max-width: 450px; }
-.steps .step h3 { font-size: 20px; line-height: 1.2; font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif; }
+.steps .step { width: 100%; text-align: left; max-width: 600px; }
+.steps .step h3 { font-size: 28px; line-height: 1.2; font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif; }
 
 /* Alternate card positions */
 .steps .step:nth-child(1) { 
@@ -47,6 +47,11 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   padding: 20px;
+}
+
+/* Steps section cards - bigger */
+.steps .card {
+  padding: 32px;
 }
 
 /* Header */
@@ -216,9 +221,9 @@
   border-color: rgba(255,255,255,0.35);
   box-shadow: none;
   backdrop-filter: saturate(120%) blur(2px);
-  height: 56px;
-  padding: 0 28px;
-  font-size: 1.125rem;
+  height: 64px;
+  padding: 0 36px;
+  font-size: 1.3rem;
   border-radius: 12px;
   transition: transform 150ms ease, background-color 120ms ease, border-color 120ms ease;
 }
@@ -246,6 +251,8 @@
 .subtitle { 
   color: var(--muted); 
   margin-bottom: 90px; 
+  font-size: 1.3rem;
+  line-height: 1.4;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8), -1px -1px 3px rgba(0, 0, 0, 0.8), 1px -1px 3px rgba(0, 0, 0, 0.8), -1px 1px 3px rgba(0, 0, 0, 0.8);
 }
 
@@ -273,7 +280,11 @@
   pointer-events: none;
 }
 .steps h3 {color: rgb(255, 255, 255);}
-.steps p {color: rgb(161, 159, 159);}
+.steps p {
+  color: rgb(161, 159, 159);
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
 .steps .step-num { width: 60px; height: 50px; border-radius: 999px; background: var(--primary); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; margin-bottom: 20px; }
 
 /* Step content layout */

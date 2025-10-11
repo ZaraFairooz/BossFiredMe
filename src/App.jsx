@@ -358,8 +358,8 @@ function Services() {
             ref={(el) => serviceRefs.current[5] = el}
             className="card service animate-service-card"
           >
-            <h3>Severance Reviews</h3>
-            <p>Get a clear read on severance terms before you sign anything.</p>
+            <h3>Family Medical Leave</h3>
+            <p>Protected leave for family or medical reasons—know your rights.</p>
           </div>
         </div>
       </div>
@@ -489,6 +489,12 @@ export function Footer() {
                   <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
                 </svg>
                 Facebook
+              </a>
+              <a href="https://tiktok.com/@bossfiredme" className="social-btn" target="_blank" rel="noopener noreferrer">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
+                TikTok
               </a>
             </div>
           </div>
