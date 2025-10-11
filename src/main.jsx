@@ -1,9 +1,10 @@
 import React, { StrictMode, useEffect, useState } from 'react'
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider, useLocation } from 'react-router-dom'
+import { createBrowserRouter, RouterProvider, useLocation, Link } from 'react-router-dom'
 import './index.css'
 import App, { Header, Footer } from './App.jsx'
 import Contact from './pages/Contact.jsx'
+import EmploymentCaseForm from './pages/EmploymentCaseForm.jsx'
 
 function ScrollToHash() {
   const { hash } = useLocation()
@@ -38,7 +39,7 @@ function EngagementModal() {
         </div>
         <div className="modal-actions">
           <button className="btn" onClick={() => setOpen(false)}>No</button>
-          <a className="btn btn-primary" href="/contact" onClick={() => setOpen(false)}>Yes</a>
+          <Link className="btn btn-primary" to="/employment-case-form" onClick={() => setOpen(false)}>Yes</Link>
         </div>
       </div>
     </div>
@@ -71,6 +72,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <Contact />
+      </Layout>
+    ),
+  },
+  {
+    path: '/employment-case-form',
+    element: (
+      <Layout>
+        <EmploymentCaseForm />
       </Layout>
     ),
   },

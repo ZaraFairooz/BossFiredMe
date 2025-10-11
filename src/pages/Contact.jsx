@@ -1,9 +1,10 @@
 export default function Contact() {
   return (
-    <section className="section">
+    <section className="section contact-page">
+      <div className="contact-bg"></div>
+      <div className="contact-overlay"></div>
       <div className="container" id="contact-form">
         <h1>Contact us</h1>
-        <p className="subtitle">Schedule your free consultation by filling out the form below.</p>
         <form className="contact-form">
           <div className="form-row">
             <div className="form-field">

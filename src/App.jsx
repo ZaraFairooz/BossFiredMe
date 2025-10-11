@@ -27,7 +27,7 @@ export function Header() {
           <Link to="/#how-it-works">How it works</Link>
           <Link to="/#faq">FAQ</Link>
           <Link to="/contact">Contact</Link>
-          <a className="btn btn-primary" href="#get-started">Get Started</a>
+          <Link className="btn btn-primary" to="/employment-case-form">Get Started</Link>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -49,7 +49,7 @@ export function Header() {
           <Link to="/#how-it-works" onClick={closeMobileMenu}>How it works</Link>
           <Link to="/#faq" onClick={closeMobileMenu}>FAQ</Link>
           <Link to="/contact" onClick={closeMobileMenu}>Contact</Link>
-          <a className="btn btn-primary" href="#get-started" onClick={closeMobileMenu}>Get Started</a>
+          <Link className="btn btn-primary" to="/employment-case-form" onClick={closeMobileMenu}>Get Started</Link>
         </nav>
       </div>
     </header>
@@ -66,7 +66,7 @@ function Hero() {
       <div className="container hero-inner">
         <h1 className="hero-title">No Fees, Unless You Win</h1>
         <p className="subtitle">Wrongfully terminated or mistreated at work? We connect you with employment attorneys who can help.</p>
-        <a className="btn btn-accent" href="#get-started">Start your case</a>
+        <Link className="btn btn-accent" to="/employment-case-form">Start your case</Link>
       </div>
     </section>
   )
@@ -367,61 +367,6 @@ function Services() {
   )
 }
 
-function FundingCTA() {
-  const titleRef = useRef(null);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (titleRef.current) {
-        const rect = titleRef.current.getBoundingClientRect();
-        const viewportHeight = window.innerHeight;
-        
-        // Calculate visibility based on scroll position
-        const elementTop = rect.top;
-        const elementBottom = rect.bottom;
-        const elementHeight = rect.height;
-        
-        // Calculate how much of the element is visible
-        let visibilityRatio = 0;
-        if (elementTop < viewportHeight && elementBottom > 0) {
-          const visibleTop = Math.max(0, elementTop);
-          const visibleBottom = Math.min(viewportHeight, elementBottom);
-          const visibleHeight = visibleBottom - visibleTop;
-          visibilityRatio = Math.max(0, Math.min(1, visibleHeight / elementHeight));
-        }
-        
-        // Apply opacity and scale based on visibility
-        const opacity = visibilityRatio > 0.1 ? visibilityRatio : 0;
-        const scale = 0.8 + (visibilityRatio * 0.2); // Scale from 0.8 to 1.0
-        
-        titleRef.current.style.opacity = opacity;
-        titleRef.current.style.transform = `scale(${scale})`;
-      }
-    };
-
-    // Initial check
-    handleScroll();
-    
-    // Add scroll listener
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  return (
-    <section id="get-started" className="section cta">
-      <div className="container cta-inner">
-        <div>
-          <h2 ref={titleRef}>Start now! Talk to one of our lawyers. </h2>
-          <p>Get a response in as fast as an hour.</p>
-        </div>
-        <a className="btn btn-primary btn-lg" href="contact">See if you qualify</a>
-      </div>
-    </section>
-  )
-}
 
 function FAQ() {
   const titleRef = useRef(null);
@@ -573,7 +518,6 @@ export default function App() {
       <Hero />
       <Steps />
       <Services />
-      <FundingCTA />
       <FAQ />
     </>
   )

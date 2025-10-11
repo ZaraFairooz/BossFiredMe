@@ -580,21 +580,115 @@
 .nav .btn:hover { transform: translateY(-1px) scale(1.04); box-shadow: 0 2px 6px rgba(37,99,235,0.25); }
 .nav .btn.btn-primary:hover { color: #ffffff; }
 
+/* Ensure Link components maintain button styling */
+.nav a.btn,
+.hero a.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Override any default Link styling */
+a.btn {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.btn:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Ensure Link buttons get proper button styling */
+a.btn.btn-primary {
+  background: var(--primary) !important;
+  color: #fff !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 2px 8px rgba(37,99,235,0.2) !important;
+}
+
+a.btn.btn-accent {
+  background: var(--accent) !important;
+  color: #fff !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.06), 0 2px 8px rgba(20,184,166,0.2) !important;
+}
+
+/* Contact page background */
+.contact-page {
+  position: relative;
+  background: #1a1a1a;
+  min-height: 100vh;
+}
+
+.contact-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/Pics/lawbg3.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+.contact-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 2;
+}
+
+.contact-page .container {
+  position: relative;
+  z-index: 3;
+}
+
 /* Contact form */
 .contact-form { margin-top: 16px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .form-field { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
-.form-field label { font-weight: 600; color: var(--text); }
+.form-field label { 
+  font-weight: 700; 
+  color: var(--text); 
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+}
+
+/* Contact page title */
+#contact-form h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  text-align: left;
+}
 .form-field input, .form-field textarea {
-  padding: 12px 14px;
+  padding: 16px 18px;
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--surface);
   color: var(--text);
+  font-size: 1.1rem;
+  min-height: 50px;
 }
 .form-field input::placeholder, .form-field textarea::placeholder { color: var(--muted); }
 /* Contact page send button hover pop */
-.contact-form .btn { transition: transform 150ms ease, box-shadow 150ms ease; }
+.contact-form .btn { 
+  transition: transform 150ms ease, box-shadow 150ms ease; 
+  font-size: 1.2rem;
+  padding: 18px 36px;
+  height: auto;
+  min-height: 60px;
+}
 .contact-form .btn:hover { transform: translateY(-1px) scale(1.06); box-shadow: 0 6px 18px rgba(2,6,23,0.15); }
 
 /* Services section theming */
@@ -643,7 +737,12 @@
   transform: scale(0.8);
 }
 .services .card.service { background: #ffffff; color: #0f172a; border-color: rgba(2,6,23,0.08); position: relative; z-index: 1; }
-.services .card.service h3 { color: var(--primary); }
+.services .card.service h3 { 
+  color: var(--primary); 
+  font-size: 1.5rem; 
+  font-weight: 700; 
+  margin-bottom: 0.75rem;
+}
 .services h2 { font-size: 50px; line-height: 2; font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif; }
 
 /* Service card animations */
