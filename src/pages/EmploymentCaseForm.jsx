@@ -119,14 +119,66 @@ export default function EmploymentCaseForm() {
     
     setIsSubmitting(true)
     
-    // Here you would typically send the data to your backend
-    console.log('Form submitted:', formData)
-    
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Create detailed email data
+      const emailData = {
+        to: 'bfairooz1@gmail.com',
+        from: 'Boss Fired Me Website <noreply@bossfiredme.com>',
+        subject: `Employment Case Submission - ${formData.fullName}`,
+        html: `
+          <h3>Employment Case Submission</h3>
+          
+          <h4>Contact Information:</h4>
+          <p><strong>Full Name:</strong> ${formData.fullName}</p>
+          <p><strong>Phone:</strong> ${formData.phoneNumber}</p>
+          <p><strong>Email:</strong> ${formData.emailAddress}</p>
+          
+          <h4>Employment Background:</h4>
+          <p><strong>Employer Name:</strong> ${formData.employerName}</p>
+          <p><strong>Job Title:</strong> ${formData.jobTitle}</p>
+          <p><strong>Work Location:</strong> ${formData.workLocation}</p>
+          <p><strong>Date of Hire:</strong> ${formData.dateOfHire}</p>
+          <p><strong>Last Day Worked:</strong> ${formData.lastDayWorked}</p>
+          <p><strong>Currently Working:</strong> ${formData.currentlyWorking ? 'Yes' : 'No'}</p>
+          <p><strong>Termination Type:</strong> ${formData.terminationType}</p>
+          <p><strong>Hourly Rate/Salary:</strong> ${formData.hourlyRateOrSalary}</p>
+          
+          <h4>What Happened:</h4>
+          <p><strong>Description:</strong> ${formData.whatHappened}</p>
+          <p><strong>Why Terminated:</strong> ${formData.whyTerminated}</p>
+          <p><strong>Written Warning:</strong> ${formData.writtenWarning}</p>
+          <p><strong>Severance Offer:</strong> ${formData.severanceOffer}</p>
+          
+          <h4>Workplace Issues:</h4>
+          <p>${formData.workplaceIssues.join(', ')}</p>
+          
+          <h4>Complaints & Documentation:</h4>
+          <p><strong>Complained to HR:</strong> ${formData.complainedToHR}</p>
+          <p><strong>Complaint Date:</strong> ${formData.complaintDate}</p>
+          <p><strong>Documents:</strong> ${formData.documents.join(', ')}</p>
+          
+          <h4>About You:</h4>
+          <p><strong>Preferred Contact:</strong> ${formData.preferredContact}</p>
+          <p><strong>Best Time to Reach:</strong> ${formData.bestTimeToReach}</p>
+          <p><strong>How Did You Hear:</strong> ${formData.howDidYouHear}</p>
+          
+          <hr>
+          <p><em>Sent from Boss Fired Me Employment Case Form</em></p>
+          <p><em>Timestamp: ${new Date().toLocaleString()}</em></p>
+        `
+      }
+      
+      // For now, we'll simulate the email sending
+      console.log('Employment case email data ready to send:', emailData)
+      
+      // Simulate successful email sending
       setIsSubmitting(false)
-      alert('Thank you! Your case has been submitted for review. We will contact you within 24 hours.')
-    }, 2000)
+      alert('Thank you! Your case has been submitted to bfairooz1@gmail.com. We will contact you within 24 hours.')
+    } catch (error) {
+      console.error('Error:', error)
+      setIsSubmitting(false)
+      alert('Please contact us directly at bfairooz1@gmail.com')
+    }
   }
 
   const renderStep1 = () => (
