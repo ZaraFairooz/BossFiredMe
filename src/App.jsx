@@ -5,8 +5,34 @@ import { useLanguage } from './LanguageContext.jsx'
 
 export function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
+  const [isScrollingDown, setIsScrollingDown] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const { language, changeLanguage, t } = useLanguage();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Only hide header if scrolled past a certain point (e.g., 100px)
+      if (currentScrollY > 100) {
+        if (currentScrollY > lastScrollY) {
+          // Scrolling down
+          setIsScrollingDown(true);
+        } else {
+          // Scrolling up
+          setIsScrollingDown(false);
+        }
+      } else {
+        // Always show header near the top
+        setIsScrollingDown(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [lastScrollY]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -16,27 +42,27 @@ export function Header() {
     setIsMobileMenuOpen(false);
   };
 
-  const toggleLanguageMenu = () => {
-    setIsLanguageMenuOpen(!isLanguageMenuOpen);
-  };
-
   const handleLanguageChange = (newLanguage) => {
     changeLanguage(newLanguage);
-    setIsLanguageMenuOpen(false);
   };
 
   return (
-    <header className="site-header">
+    <header className={`site-header ${isScrollingDown ? 'header-hidden' : ''}`}>
       <div className="container header-inner">
-        <Link to="/" className="brand">
-          <img src="/Pics/3.png" alt="Boss Fired Me Logo" className="brand-icon" />
-          {t('brand')}
-        </Link>
+        <div className="brand-container">
+          <Link to="/" className="brand">
+            <img src="/Pics/3.png" alt="Boss Fired Me Logo" className="brand-icon" />
+            <div className="brand-text">
+              <span className="brand-name">{t('brand')}</span>
+              <span className="brand-tagline">{t('tagline')}</span>
+            </div>
+          </Link>
+        </div>
         
         {/* Desktop Navigation */}
         <nav className="nav desktop-nav">
-          <Link to="/#services">{t('services')}</Link>
           <Link to="/#how-it-works">{t('howItWorks')}</Link>
+          <Link to="/#services">{t('services')}</Link>
           <Link to="/#faq">{t('faq')}</Link>
           <Link to="/contact">{t('contact')}</Link>
           <Link className="btn btn-primary" to="/employment-case-form">{t('getStarted')}</Link>
@@ -44,28 +70,20 @@ export function Header() {
           {/* Language Switcher */}
           <div className="language-switcher">
             <button 
-              className="language-btn" 
-              onClick={toggleLanguageMenu}
+              className={`language-btn ${language === 'en' ? 'active' : ''}`}
+              onClick={() => handleLanguageChange('en')}
               aria-label={t('language')}
             >
-              {language === 'en' ? 'EN' : 'ES'}
+              EN
             </button>
-            {isLanguageMenuOpen && (
-              <div className="language-menu">
-                <button 
-                  className={language === 'en' ? 'active' : ''} 
-                  onClick={() => handleLanguageChange('en')}
-                >
-                  {t('english')}
-                </button>
-                <button 
-                  className={language === 'es' ? 'active' : ''} 
-                  onClick={() => handleLanguageChange('es')}
-                >
-                  {t('spanish')}
-                </button>
-              </div>
-            )}
+            <span className="language-separator">|</span>
+            <button 
+              className={`language-btn ${language === 'es' ? 'active' : ''}`}
+              onClick={() => handleLanguageChange('es')}
+              aria-label={t('language')}
+            >
+              ES
+            </button>
           </div>
         </nav>
 
@@ -84,8 +102,8 @@ export function Header() {
 
         {/* Mobile Navigation */}
         <nav className={`nav mobile-nav ${isMobileMenuOpen ? 'open' : ''}`}>
-          <Link to="/#services" onClick={closeMobileMenu}>{t('services')}</Link>
           <Link to="/#how-it-works" onClick={closeMobileMenu}>{t('howItWorks')}</Link>
+          <Link to="/#services" onClick={closeMobileMenu}>{t('services')}</Link>
           <Link to="/#faq" onClick={closeMobileMenu}>{t('faq')}</Link>
           <Link to="/contact" onClick={closeMobileMenu}>{t('contact')}</Link>
           <Link className="btn btn-primary" to="/employment-case-form" onClick={closeMobileMenu}>{t('getStarted')}</Link>
@@ -122,9 +140,14 @@ function Hero() {
       <div className="hero-overlay"></div>
       <div className="container hero-inner">
         <img src="/Pics/3.png" alt="Boss Fired Me Logo" className="hero-logo" />
+        <p className="hero-header">{t('heroHeader')}</p>
         <h1 className="hero-title">{t('heroTitle')}</h1>
-        <p className="subtitle">{t('heroSubtitle')}</p>
-        <Link className="btn btn-accent" to="/employment-case-form">{t('startYourCase')}</Link>
+        <p className="hero-subtitle">{t('heroSubtitle')}</p>
+        <p className="hero-text">{t('heroText')}</p>
+        <div className="hero-button-container">
+          <Link className="btn btn-accent" to="/employment-case-form">{t('startYourCase')}</Link>
+          <p className="hero-footer">{t('heroFooter')}</p>
+        </div>
       </div>
     </section>
   )
@@ -134,6 +157,18 @@ function Steps() {
   const stepRefs = useRef([]);
   const titleRef = useRef(null);
   const { t } = useLanguage();
+  
+  // Debug: Log translations to verify they're loading
+  useEffect(() => {
+    console.log('Step translations:', {
+      step1Title: t('step1Title'),
+      step1Description: t('step1Description'),
+      step2Title: t('step2Title'),
+      step2Description: t('step2Description'),
+      step3Title: t('step3Title'),
+      step3Description: t('step3Description'),
+    });
+  }, [t]);
 
   useEffect(() => {
     const observerOptions = {
@@ -229,9 +264,10 @@ function Steps() {
           <div className="left">
             <h2 ref={titleRef}>{t('threeEasySteps')}</h2>
             <div className="grid three">
-              <div 
+              <Link 
+                to="/employment-case-form"
                 ref={(el) => stepRefs.current[0] = el}
-                className="card step animate-card"
+                className="card step animate-card step-clickable"
               >
                 <div className="step-num">1</div>
                 <div className="step-content">
@@ -240,28 +276,41 @@ function Steps() {
                     <p>{t('step1Description')}</p>
                   </div>
                   <div className="step-image">
-                    <img src="/Pics/complaint.gif" alt="Complaint illustration" />
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="16" y1="13" x2="8" y2="13"></line>
+                      <line x1="16" y1="17" x2="8" y2="17"></line>
+                      <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
                   </div>
                 </div>
-              </div>
-              <div 
+              </Link>
+              <Link 
+                to="/employment-case-form"
                 ref={(el) => stepRefs.current[1] = el}
-                className="card step animate-card"
+                className="card step animate-card step-clickable"
               >
                 <div className="step-num">2</div>
                 <div className="step-content">
                   <div className="step-image">
-                    <img src="/Pics/lawyerMatch.gif" alt="Lawyer match illustration" />
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="9" cy="7" r="4"></circle>
+                      <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
                   </div>
                   <div className="step-text">
                     <h3>{t('step2Title')}</h3>
                     <p>{t('step2Description')}</p>
                   </div>
                 </div>
-              </div>
-              <div 
+              </Link>
+              <Link 
+                to="/employment-case-form"
                 ref={(el) => stepRefs.current[2] = el}
-                className="card step animate-card"
+                className="card step animate-card step-clickable"
               >
                 <div className="step-num">3</div>
                 <div className="step-content">
@@ -270,10 +319,18 @@ function Steps() {
                     <p>{t('step3Description')}</p>
                   </div>
                   <div className="step-image">
-                    <img src="/Pics/like.gif" alt="Like illustration" />
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                      <path d="M9 12l2 2 4-4"></path>
+                    </svg>
                   </div>
                 </div>
-              </div>
+              </Link>
+            </div>
+            <div className="steps-cta">
+              <Link className="btn btn-primary btn-lg" to="/employment-case-form">
+                {t('startFreeCaseReview')}
+              </Link>
             </div>
           </div>
         </div>
@@ -431,6 +488,7 @@ function Services() {
 function FAQ() {
   const titleRef = useRef(null);
   const { t } = useLanguage();
+  const [showAll, setShowAll] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -472,23 +530,70 @@ function FAQ() {
     };
   }, []);
 
+  const faqs = [
+    { q: 'faq1Question', a: 'faq1Answer' },
+    { q: 'faq2Question', a: 'faq2Answer' },
+    { q: 'faq3Question', a: 'faq3Answer' },
+    { q: 'faq4Question', a: 'faq4Answer' },
+    { q: 'faq5Question', a: 'faq5Answer' },
+    { q: 'faq6Question', a: 'faq6Answer' },
+    { q: 'faq7Question', a: 'faq7Answer' },
+    { q: 'faq8Question', a: 'faq8Answer' },
+    { q: 'faq9Question', a: 'faq9Answer' },
+    { q: 'faq10Question', a: 'faq10Answer' },
+    { q: 'faq11Question', a: 'faq11Answer' },
+    { q: 'faq12Question', a: 'faq12Answer' },
+    { q: 'faq13Question', a: 'faq13Answer' },
+    { q: 'faq14Question', a: 'faq14Answer' },
+    { q: 'faq15Question', a: 'faq15Answer' },
+  ];
+
+  const initialFaqs = faqs.slice(0, 5);
+  const remainingFaqs = faqs.slice(5);
+  const displayedFaqs = showAll ? faqs : initialFaqs;
+
   return (
     <section id="faq" className="section faq">
       <div className="container">
-        <h2 ref={titleRef}>{t('frequentlyAskedQuestions')} <span className="gradient-text">{t('questions')}</span></h2>
+        <h2 ref={titleRef}>{t('frequentlyAskedQuestions')}</h2>
+        
+        {/* Trust Badges */}
+        <div className="faq-trust-badges">
+          <div className="trust-badge">
+            <span className="stars">⭐⭐⭐⭐⭐</span>
+            <span>{t('trustedBy')}</span>
+          </div>
+          <div className="trust-badges-row">
+            <div className="trust-badge-small">{t('licensedAttorney')}</div>
+            <div className="trust-badge-small">{t('secureConfidential')}</div>
+            <div className="trust-badge-small">{t('noHiddenFees')}</div>
+          </div>
+        </div>
+
         <div className="faq-content">
-          <details>
-            <summary>{t('faq1Question')}</summary>
-            <p>{t('faq1Answer')}</p>
-          </details>
-          <details>
-            <summary>{t('faq2Question')}</summary>
-            <p>{t('faq2Answer')}</p>
-          </details>
-          <details>
-            <summary>{t('faq3Question')}</summary>
-            <p>{t('faq3Answer')}</p>
-          </details>
+          {displayedFaqs.map((faq, index) => (
+            <details key={index} className={index % 2 === 0 ? 'faq-even' : 'faq-odd'}>
+              <summary>
+                <span className="faq-question">{t(faq.q)}</span>
+                <span className="faq-icon">+</span>
+              </summary>
+              <p dangerouslySetInnerHTML={{ __html: t(faq.a) }}></p>
+            </details>
+          ))}
+          
+          {remainingFaqs.length > 0 && (
+            <button 
+              className="faq-see-more-btn"
+              onClick={() => setShowAll(!showAll)}
+            >
+              {showAll ? t('seeLessFaqs') : t('seeMoreFaqs')}
+            </button>
+          )}
+        </div>
+
+        {/* Confidentiality Statement */}
+        <div className="faq-confidentiality">
+          <p>{t('confidentialityStatement')}</p>
         </div>
       </div>
     </section>
@@ -498,6 +603,10 @@ function FAQ() {
 export function Footer() {
   const { t } = useLanguage();
   
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
   return (
     <footer className="site-footer">
       <video className="footer-video" autoPlay muted loop playsInline>
@@ -505,11 +614,17 @@ export function Footer() {
       </video>
       <div className="footer-overlay"></div>
       <div className="container">
+        <div className="footer-cta">
+          <p className="footer-next-step">{t('footerNextStep')}</p>
+          <Link to="/employment-case-form" className="btn btn-primary btn-lg footer-cta-btn">
+            {t('getStarted')}
+          </Link>
+        </div>
+        
         <div className="footer-content">
           <div className="footer-section">
             <img src="/Pics/3.png" alt="Boss Fired Me Logo" className="footer-logo" />
             <div className="brand">{t('footerBrand')}</div>
-            <div className="muted">{t('footerCopyright', { year: new Date().getFullYear() })}</div>
           </div>
           
           <div className="footer-section">
@@ -531,7 +646,7 @@ export function Footer() {
             </div>
           </div>
           
-          <div className="footer-section">
+          <div className="footer-section footer-section-social">
             <h3>{t('footerFollowUs')}</h3>
             <div className="social-buttons">
               <a href="https://linkedin.com/company/bossfiredme" className="social-btn" target="_blank" rel="noopener noreferrer">
@@ -562,6 +677,26 @@ export function Footer() {
               </a>
             </div>
           </div>
+        </div>
+        
+        <div className="footer-navigation">
+          <Link to="/">{t('home')}</Link>
+          <span className="footer-nav-separator">|</span>
+          <Link to="/#how-it-works">{t('howItWorks')}</Link>
+          <span className="footer-nav-separator">|</span>
+          <Link to="/#faq">{t('faqs')}</Link>
+          <span className="footer-nav-separator">|</span>
+          <Link to="/privacy">{t('privacyPolicy')}</Link>
+          <span className="footer-nav-separator">|</span>
+          <Link to="/terms">{t('termsOfUse')}</Link>
+        </div>
+        
+        <div className="footer-disclaimer">
+          <p>{t('footerDisclaimer')}</p>
+        </div>
+        
+        <div className="footer-copyright">
+          <p>{t('footerCopyright', { year: new Date().getFullYear() })}</p>
         </div>
       </div>
     </footer>

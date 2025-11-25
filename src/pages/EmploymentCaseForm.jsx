@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useLanguage } from '../LanguageContext.jsx'
 import { sendEmploymentCaseFormspree } from '../services/emailService.js'
 import './EmploymentCaseForm.css'
 
 export default function EmploymentCaseForm() {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     // Step 1 - Contact Info
     fullName: '',
@@ -127,19 +128,21 @@ export default function EmploymentCaseForm() {
       await sendEmploymentCaseFormspree(formData)
       
       setIsSubmitting(false)
-      alert(t('thankYouCase'))
+      // Redirect to thank you page
+      navigate('/thank-you')
       
     } catch (error) {
       console.error('Error sending email:', error)
       setIsSubmitting(false)
-      alert('Thank you! Your case has been submitted to bfairooz1@gmail.com')
+      // Still redirect to thank you page even if there's an error
+      navigate('/thank-you')
     }
   }
 
   const renderStep1 = () => (
     <div className="form-step">
       <h2>{t('step1ContactInfo')}</h2>
-      <p className="step-description">{t('step1Description')}</p>
+      <p className="step-description">{t('formStep1Description')}</p>
       
       <div className="form-group">
         <label htmlFor="fullName">{t('fullName')}: <span className="required">{t('required')}</span></label>

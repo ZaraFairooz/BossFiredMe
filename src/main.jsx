@@ -6,7 +6,12 @@ import App, { Header, Footer } from './App.jsx'
 import Contact from './pages/Contact.jsx'
 import EmploymentCaseForm from './pages/EmploymentCaseForm.jsx'
 import AdminPanel from './pages/AdminPanel.jsx'
+import ThankYou from './pages/ThankYou.jsx'
+import PrivacyPolicy from './pages/PrivacyPolicy.jsx'
+import TermsOfUse from './pages/TermsOfUse.jsx'
 import { LanguageProvider, useLanguage } from './LanguageContext.jsx'
+import { useContext } from 'react'
+import { LanguageContext } from './LanguageContext.jsx'
 
 function ScrollToHash() {
   const { hash } = useLocation()
@@ -21,20 +26,10 @@ function ScrollToHash() {
   return null
 }
 
-function EngagementModal() {
-  const [open, setOpen] = useState(false)
-  const { t } = useLanguage()
+function EngagementModalContent({ onClose }) {
+  const context = useContext(LanguageContext)
+  const t = context ? context.t : (key) => key === 'no' ? 'No' : 'Yes'
   
-  useEffect(() => {
-    const shown = sessionStorage.getItem('bfm_modal_shown')
-    if (shown) return
-    const t = setTimeout(() => {
-      setOpen(true)
-      sessionStorage.setItem('bfm_modal_shown', '1')
-    }, 5000)
-    return () => clearTimeout(t)
-  }, [])
-  if (!open) return null
   return (
     <div className="modal-overlay" role="dialog" aria-modal="true">
       <div className="modal">
@@ -42,12 +37,30 @@ function EngagementModal() {
           <h3>Do you have a situation our lawyers can help with?</h3>
         </div>
         <div className="modal-actions">
-          <button className="btn" onClick={() => setOpen(false)}>{t('no')}</button>
-          <Link className="btn btn-primary" to="/employment-case-form" onClick={() => setOpen(false)}>{t('yes')}</Link>
+          <button className="btn" onClick={onClose}>{t('no')}</button>
+          <Link className="btn btn-primary" to="/employment-case-form" onClick={onClose}>{t('yes')}</Link>
         </div>
       </div>
     </div>
   )
+}
+
+function EngagementModal() {
+  const [open, setOpen] = useState(false)
+  
+  useEffect(() => {
+    const shown = sessionStorage.getItem('bfm_modal_shown')
+    if (shown) return
+    const timer = setTimeout(() => {
+      setOpen(true)
+      sessionStorage.setItem('bfm_modal_shown', '1')
+    }, 5000)
+    return () => clearTimeout(timer)
+  }, [])
+  
+  if (!open) return null
+  
+  return <EngagementModalContent onClose={() => setOpen(false)} />
 }
 
 function Layout({ children }) {
@@ -88,6 +101,30 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: '/thank-you',
+    element: (
+      <Layout>
+        <ThankYou />
+      </Layout>
+    ),
+  },
+  {
+    path: '/privacy',
+    element: (
+      <Layout>
+        <PrivacyPolicy />
+      </Layout>
+    ),
+  },
+  {
+    path: '/terms',
+    element: (
+      <Layout>
+        <TermsOfUse />
+      </Layout>
+    ),
+  },
+  {
     path: '/admin',
     element: (
       <Layout>
@@ -97,10 +134,14 @@ const router = createBrowserRouter([
   },
 ])
 
+function AppWithRouter() {
+  return <RouterProvider router={router} />
+}
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <LanguageProvider>
-      <RouterProvider router={router} />
+      <AppWithRouter />
     </LanguageProvider>
   </StrictMode>,
 )

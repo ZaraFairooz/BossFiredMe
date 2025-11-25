@@ -50,6 +50,7 @@ export default function Contact() {
       <div className="contact-overlay"></div>
       <div className="container" id="contact-form">
         <h1>{t('contactUs')}</h1>
+        <p className="contact-subtext">{t('contactSubtext')}</p>
         <form className="contact-form" onSubmit={handleSubmit}>
           <div className="form-row">
             <div className="form-field">
@@ -90,15 +91,22 @@ export default function Contact() {
               />
             </div>
             <div className="form-field">
-              <label htmlFor="subject">{t('subject')}</label>
-              <input 
+              <label htmlFor="subject">{t('selectIssue')}</label>
+              <select 
                 id="subject" 
                 name="subject" 
-                type="text" 
-                placeholder={t('exampleSubject')} 
                 value={formData.subject}
                 onChange={handleInputChange}
-              />
+                required
+              >
+                <option value="">{t('selectIssue')}</option>
+                <option value={t('wrongfulTermination')}>{t('wrongfulTermination')}</option>
+                <option value={t('discrimination')}>{t('discrimination')}</option>
+                <option value={t('retaliation')}>{t('retaliation')}</option>
+                <option value={t('harassment')}>{t('harassment')}</option>
+                <option value={t('wageHour')}>{t('wageHour')}</option>
+                <option value={t('other')}>{t('other')}</option>
+              </select>
             </div>
           </div>
           <div className="form-field">
@@ -112,7 +120,8 @@ export default function Contact() {
               onChange={handleInputChange}
             />
           </div>
-          <button type="submit" className="btn btn-primary btn-lg">{t('send')}</button>
+          <button type="submit" className="btn btn-primary btn-lg">{t('getFreeCaseReview')}</button>
+          <p className="form-disclaimer">{t('formDisclaimer')}</p>
         </form>
       </div>
     </section>
