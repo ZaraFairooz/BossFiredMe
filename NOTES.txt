@@ -1,5 +1,4 @@
 TO DO
-- change text fonts and colors
 - change string var to int var for pho no on forms n contact n fill out all for contact
 - fix the terms address
 - do 2 step verif to matt's email 

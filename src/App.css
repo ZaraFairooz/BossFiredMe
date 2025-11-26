@@ -163,6 +163,7 @@ body {
   font-weight: 700;
   color: rgba(255, 255, 255, 0.85);
   line-height: 1.2;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 .brand-tagline {
   font-size: 12px;
@@ -184,6 +185,7 @@ body {
   align-items: center;
   gap: 12px;
   flex-wrap: nowrap;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 @media (max-width: 1200px) {
@@ -364,11 +366,12 @@ body {
 .hero-header {
   font-size: clamp(16px, 2vw, 20px);
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(180, 180, 180, 0.95);
   margin-bottom: 16px;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8), -1px -1px 2px rgba(0, 0, 0, 0.8);
   letter-spacing: 0.5px;
   text-transform: uppercase;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .hero-title {
@@ -402,6 +405,7 @@ body {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .hero-button-container {
@@ -417,6 +421,7 @@ body {
   margin: 0;
   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
   letter-spacing: 0.5px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .hero-logo {
@@ -541,6 +546,7 @@ body {
   color: rgba(255, 255, 255, 0.9) !important;
   font-size: 1.1rem !important;
   line-height: 1.5 !important;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
 }
 
 /* Override any color: inherit rules for step text */
@@ -906,6 +912,7 @@ a.step-clickable .step-text * {
 
 .faq-question {
   flex: 1;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .faq-icon {
@@ -933,6 +940,7 @@ a.step-clickable .step-text * {
   line-height: 1.7;
   font-size: clamp(15px, 1.8vw, 16px);
   padding-left: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .faq-see-more-btn {
@@ -1001,6 +1009,7 @@ a.step-clickable .step-text * {
   color: rgba(255, 255, 255, 0.95);
   margin-bottom: 24px;
   line-height: 1.5;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 .footer-cta-btn {
   font-size: 1.2rem;
@@ -1045,6 +1054,7 @@ a.step-clickable .step-text * {
   font-weight: 600;
   margin: 0 0 12px 0;
   text-align: left;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 .footer-section .brand {
   font-weight: 800;
@@ -1309,6 +1319,7 @@ a.btn.btn-accent:not(.hero .btn.btn-accent) {
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 32px;
   text-align: center;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 /* Contact form */
@@ -1320,6 +1331,28 @@ a.btn.btn-accent:not(.hero .btn.btn-accent) {
   color: #ffffff; 
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.form-field .required {
+  color: #ff6b6b;
+  margin-left: 4px;
+}
+.form-field .error-message {
+  display: block;
+  color: #ff6b6b;
+  font-size: 0.875rem;
+  margin-top: 6px;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.form-field input:invalid:not(:placeholder-shown),
+.form-field textarea:invalid:not(:placeholder-shown),
+.form-field select:invalid:not(:placeholder-shown) {
+  border-color: #ff6b6b;
+}
+.form-field input:valid:not(:placeholder-shown),
+.form-field textarea:valid:not(:placeholder-shown),
+.form-field select:valid:not(:placeholder-shown) {
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 /* Contact page title */
@@ -1329,6 +1362,7 @@ a.btn.btn-accent:not(.hero .btn.btn-accent) {
   margin-bottom: 1rem;
   text-align: center;
   color: #ffffff;
+  font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif;
 }
 .form-field input, .form-field textarea, .form-field select {
   padding: 16px 18px;
@@ -1401,12 +1435,22 @@ a.btn.btn-accent:not(.hero .btn.btn-accent) {
   opacity: 0;
   transform: scale(0.8);
 }
-.services .card.service { background: #ffffff; color: #0f172a; border-color: rgba(2,6,23,0.08); position: relative; z-index: 1; }
+.services .card.service { 
+  background: #ffffff; 
+  color: #0f172a; 
+  border-color: rgba(2,6,23,0.08); 
+  position: relative; 
+  z-index: 1; 
+}
+.services .card.service p {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
 .services .card.service h3 { 
   color: #000080; 
   font-size: 1.5rem; 
   font-weight: 700; 
   margin-bottom: 0.75rem;
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 .services h2 { font-size: 50px; line-height: 2; font-family: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif; }
 
