@@ -65,24 +65,49 @@ export default function EmploymentCaseForm() {
         }))
       }
     } else {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }))
+      // Special handling for phone number - only allow digits
+      if (name === 'phoneNumber') {
+        // Remove all non-digit characters
+        const digitsOnly = value.replace(/\D/g, '')
+        setFormData(prev => ({
+          ...prev,
+          [name]: digitsOnly
+        }))
+      } else {
+        setFormData(prev => ({
+          ...prev,
+          [name]: value
+        }))
+      }
     }
   }
 
   const validateStep = (step) => {
     switch (step) {
       case 1:
-        return formData.fullName && formData.phoneNumber && formData.emailAddress
+        // Email validation regex
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        return formData.fullName && 
+               formData.fullName.trim() &&
+               formData.phoneNumber && 
+               formData.phoneNumber.length >= 10 && 
+               formData.phoneNumber.length <= 15 &&
+               formData.emailAddress &&
+               formData.emailAddress.trim() &&
+               emailRegex.test(formData.emailAddress)
       case 2:
-        return formData.employerName && formData.jobTitle && formData.workLocation && 
-               formData.dateOfHire && formData.terminationType && formData.hourlyRateOrSalary &&
+        return formData.employerName && formData.employerName.trim() &&
+               formData.jobTitle && formData.jobTitle.trim() &&
+               formData.workLocation && formData.workLocation.trim() &&
+               formData.dateOfHire && 
+               formData.terminationType && 
+               formData.hourlyRateOrSalary && formData.hourlyRateOrSalary.trim() &&
                (formData.currentlyWorking || formData.lastDayWorked)
       case 3:
-        return formData.whatHappened && formData.whyTerminated && 
-               formData.writtenWarning && formData.severanceOffer
+        return formData.whatHappened && formData.whatHappened.trim() && formData.whatHappened.trim().length >= 10 &&
+               formData.whyTerminated && 
+               formData.writtenWarning && 
+               formData.severanceOffer
       case 4:
         return formData.workplaceIssues.length > 0
       case 5:
@@ -100,7 +125,60 @@ export default function EmploymentCaseForm() {
         setCurrentStep(currentStep + 1)
       }
     } else {
-      alert(t('pleaseFillRequired'))
+      // Provide specific error messages for each step
+      if (currentStep === 1) {
+        if (!formData.fullName || !formData.fullName.trim()) {
+          alert('Please enter your full name')
+        } else if (!formData.phoneNumber || formData.phoneNumber.length < 10 || formData.phoneNumber.length > 15) {
+          alert('Phone number must be between 10 and 15 digits')
+        } else if (!formData.emailAddress || !formData.emailAddress.trim()) {
+          alert('Please enter your email address')
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.emailAddress)) {
+          alert('Please enter a valid email address')
+        } else {
+          alert(t('pleaseFillRequired'))
+        }
+      } else if (currentStep === 2) {
+        if (!formData.employerName || !formData.employerName.trim()) {
+          alert('Please enter your employer name')
+        } else if (!formData.jobTitle || !formData.jobTitle.trim()) {
+          alert('Please enter your job title')
+        } else if (!formData.workLocation || !formData.workLocation.trim()) {
+          alert('Please enter your work location')
+        } else if (!formData.dateOfHire) {
+          alert('Please enter your date of hire')
+        } else if (!formData.terminationType) {
+          alert('Please select how your employment ended')
+        } else if (!formData.hourlyRateOrSalary || !formData.hourlyRateOrSalary.trim()) {
+          alert('Please enter your hourly rate or salary')
+        } else if (!formData.currentlyWorking && !formData.lastDayWorked) {
+          alert('Please enter your last day worked or check "Currently working"')
+        } else {
+          alert(t('pleaseFillRequired'))
+        }
+      } else if (currentStep === 3) {
+        if (!formData.whatHappened || !formData.whatHappened.trim() || formData.whatHappened.trim().length < 10) {
+          alert('Please provide a detailed description (at least 10 characters) of what happened')
+        } else if (!formData.whyTerminated) {
+          alert('Please select why you believe you were terminated or treated unfairly')
+        } else if (!formData.writtenWarning) {
+          alert('Please indicate if you received a written warning')
+        } else if (!formData.severanceOffer) {
+          alert('Please indicate if you received a severance offer')
+        } else {
+          alert(t('pleaseFillRequired'))
+        }
+      } else if (currentStep === 4) {
+        alert('Please select at least one workplace issue')
+      } else if (currentStep === 5) {
+        if (!formData.complainedToHR) {
+          alert('Please indicate if you complained to HR or a government agency')
+        } else {
+          alert(t('pleaseFillRequired'))
+        }
+      } else {
+        alert(t('pleaseFillRequired'))
+      }
     }
   }
 
@@ -153,6 +231,7 @@ export default function EmploymentCaseForm() {
           value={formData.fullName}
           onChange={handleInputChange}
           required
+          placeholder="Enter first and last name and middle initial"
         />
       </div>
       
@@ -165,7 +244,18 @@ export default function EmploymentCaseForm() {
           value={formData.phoneNumber}
           onChange={handleInputChange}
           required
+          minLength={10}
+          maxLength={15}
+          pattern="[0-9]{10,15}"
+          inputMode="numeric"
+          placeholder="Enter 10-digit phone number"
         />
+        {formData.phoneNumber && formData.phoneNumber.length > 0 && formData.phoneNumber.length < 10 && (
+          <span className="error-message">Phone number must be at least 10 digits</span>
+        )}
+        {formData.phoneNumber && formData.phoneNumber.length > 15 && (
+          <span className="error-message">Phone number must be 15 digits or less</span>
+        )}
       </div>
       
       <div className="form-group">
@@ -177,7 +267,12 @@ export default function EmploymentCaseForm() {
           value={formData.emailAddress}
           onChange={handleInputChange}
           required
+          placeholder="Enter your email address (example@email.com)"
+          pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
         />
+        {formData.emailAddress && formData.emailAddress.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.emailAddress) && (
+          <span className="error-message">Please enter a valid email address</span>
+        )}
       </div>
     </div>
   )
@@ -196,6 +291,7 @@ export default function EmploymentCaseForm() {
           value={formData.employerName}
           onChange={handleInputChange}
           required
+          placeholder="Enter your employer's company name"
         />
       </div>
       
@@ -208,6 +304,7 @@ export default function EmploymentCaseForm() {
           value={formData.jobTitle}
           onChange={handleInputChange}
           required
+          placeholder="Enter your job title or position (e.g., Sales Manager, Software Engineer)"
         />
       </div>
       
@@ -220,6 +317,7 @@ export default function EmploymentCaseForm() {
           value={formData.workLocation}
           onChange={handleInputChange}
           required
+          placeholder="Enter city and state (e.g., Los Angeles, CA)"
         />
       </div>
       
@@ -232,6 +330,7 @@ export default function EmploymentCaseForm() {
           value={formData.dateOfHire}
           onChange={handleInputChange}
           required
+          max={new Date().toISOString().split('T')[0]}
         />
       </div>
       
@@ -260,6 +359,7 @@ export default function EmploymentCaseForm() {
           onChange={handleInputChange}
           disabled={formData.currentlyWorking}
           required={!formData.currentlyWorking}
+          max={new Date().toISOString().split('T')[0]}
         />
       </div>
       
@@ -287,7 +387,7 @@ export default function EmploymentCaseForm() {
           name="hourlyRateOrSalary"
           value={formData.hourlyRateOrSalary}
           onChange={handleInputChange}
-          placeholder="e.g., $15/hour or $50,000/year"
+          placeholder="Enter hourly rate or annual salary (e.g., $15/hour or $50,000/year)"
           required
         />
       </div>
@@ -307,8 +407,9 @@ export default function EmploymentCaseForm() {
           value={formData.whatHappened}
           onChange={handleInputChange}
           rows="6"
-          placeholder="Describe what led to your termination, demotion, or complaint."
+          placeholder="Describe what led to your termination, demotion, or complaint. Include dates, names, and specific incidents if possible."
           required
+          minLength={10}
         />
       </div>
       
@@ -545,6 +646,7 @@ export default function EmploymentCaseForm() {
           name="complaintDate"
           value={formData.complaintDate}
           onChange={handleInputChange}
+          max={new Date().toISOString().split('T')[0]}
         />
       </div>
       

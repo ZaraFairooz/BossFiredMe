@@ -151,7 +151,7 @@ export default function Contact() {
                 id="phone" 
                 name="phone" 
                 type="tel" 
-                placeholder={t('enterYourPhone') || 'Enter 10-digit phone number'} 
+                placeholder={t('enterYourPhone')} 
                 value={formData.phone}
                 onChange={handleInputChange}
                 required
