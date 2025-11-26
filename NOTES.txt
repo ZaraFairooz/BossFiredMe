@@ -1,7 +1,5 @@
 TO DO
-- change string var to int var for pho no on forms n contact n fill out all for contact
-- fix the terms address
-- do 2 step verif to matt's email 
+- do 2 step verif to matt's email , get pho no  
 
 What You Need to Do Next
 1. Enable 2-Step Verification on your Gmail account (bfairooz1@gmail.com)

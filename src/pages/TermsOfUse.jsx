@@ -106,7 +106,7 @@ export default function TermsOfUse() {
           <div className="legal-section">
             <h2>Contact Us</h2>
             <p>
-              If you have any questions about these Terms or about the Site, you may contact us by email at <a href="mailto:info@bossfiredme.com">info@bossfiredme.com</a> or by telephone at (123) 456-7890. Correspondence may also be sent to Boss Fired Me, [insert address], California [ZIP].
+              If you have any questions about these Terms or about the Site, you may contact us by email at <a href="mailto:info@bossfiredme.com">info@bossfiredme.com</a>. 
             </p>
           </div>
 
